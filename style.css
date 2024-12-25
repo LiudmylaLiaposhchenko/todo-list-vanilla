@@ -1,0 +1,10 @@
+body {
+  width: 80vw;
+  margin: 0 auto;
+}
+
+@media (min-width: 400px) {
+  body {
+    width: 60vw;
+  }
+}
