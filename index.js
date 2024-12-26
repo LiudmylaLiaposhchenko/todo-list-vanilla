@@ -35,13 +35,24 @@ sb.from('task')
 
     for (const task of data) {
       taskList.innerHTML += `
-      <li class="list-group-item d-flex gap-2 align-items-center">
-        <input class="form-check-input" type="checkbox" ${
-          task.done === true ? 'checked' : ''
-        } id="flexCheckDefault">
-        <p style="margin-right: auto; margin-bottom: 0">${task.task}</p>
-        <button type="button" class="btn btn-warning">Delete</button>
-      </li>
-    `;
+        <li class="list-group-item d-flex gap-2 align-items-center">
+          <input class="form-check-input" type="checkbox" ${
+            task.done === true ? 'checked' : ''
+          } id="flexCheckDefault">
+          <p style="margin-right: auto; margin-bottom: 0">${task.task}</p>
+          <button type="button" class="btn btn-warning">Delete</button>
+        </li>
+      `;
+    }
+
+    const checkboxList = document.querySelectorAll('.form-check-input');
+    for (let i = 0; i < checkboxList.length; i++) {
+      checkboxList[i].addEventListener('change', async (e) => {
+        const { error } = await sb
+          .from('task')
+          .update({ done: e.target.checked })
+          .eq('id', data[i].id);
+        if (error) console.error(error);
+      });
     }
   });
